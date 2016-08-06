@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Welcome to Vecta Corp.</title>
+    <!-- Normal style sheet used for layout and general formatting. -->
+    <link href="styles.css" rel="stylesheet">
+    <!-- jQuery library reference. Latest is always referenced from jQuery's CDN. -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+//Part 4 - Using the jQuery .ajax() Shorthand Method (15 Points)
+//In this part of the assignment you will be working with the jQuery .ajax() shorthand method. In the lectures //for this topic you saw that you can programmatically load XML or JSON data into a web page using the .ajax()
+//shorthand method. Here you will rewrite the code that you wrote in part 3, using the .ajax() shorthand
+//method.
+
+//1•Rewrite the code that you wrote in lab 3 so that you are using the .ajax() shorthand method instead of the
+// .getJSON() method.
+
+//2•You must include and set the following options:
+//  A• type
+//  B• url
+//  C• timeout
+//  D• datatype
+
+//3•beforeSend: display a loading message on the page
+
+//4•error: display a jQuery UI dialog box with an error message inside
+
+//5•success: this is where you’ll process the data returned
+        
+	$(function() {
+		$.ajax({
+			type: "get",
+			url: "team.xml",
+			beforeSend: function() {
+				$("#result").html("Loading...");
+			},
+			timeout: 10000,
+			error: function(xhr, status, error) {
+				alert("Error: " + xhr.status + " - " + error);
+			},
+			dataType: "xml",
+			success: function(response) {
+				$('#result').html('');
+				$(response).find("management").children().each(function() {
+					$("#result").append("<b>" + 
+						$(this).find('name').text() + "</b><br>" + 
+						$(this).find('title').text() + "<br>" + 
+						$(this).find('bio').text() + "<br><br>");
+				});
+			}
+		});
+	});        
+        
+</script>
+</head>
+
+<body>
+<section id="container">
+    <header></header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="solutions.html">Solutions</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+        </ul>
+    </nav>
+    
+    <section id="content">
+        <h2>The Vecta Corp. Management Team</h2>
+
+		<div id="result"></div>
+    </section>
+    
+    <footer></footer>
+</section>
+
+</body>
+</html>
